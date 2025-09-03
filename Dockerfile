@@ -31,7 +31,7 @@ RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir torch==2.0.1 --index-url https://download.pytorch.org/whl/cpu
 RUN pip install --no-cache-dir torchvision==0.15.2 --index-url https://download.pytorch.org/whl/cpu  
 RUN pip install --no-cache-dir opencv-python-headless==4.8.1.78
-RUN pip install --no-cache-dir ultralytics==8.0.196
+RUN pip install --no-cache-dir ultralytics==8.3.154
 RUN pip install --no-cache-dir easyocr==1.7.0
 RUN pip install --no-cache-dir numpy==1.24.3 Pillow==10.0.0
 

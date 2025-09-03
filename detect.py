@@ -5,7 +5,7 @@ import cv2
 import easyocr
 
 # Cargar modelo YOLO
-model = YOLO("./runs/detect/train4/weights/best.pt")
+model = YOLO("./model.pt")
 reader = easyocr.Reader(["en"])
 
 # Imagen de entrada

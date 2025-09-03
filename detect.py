@@ -4,18 +4,29 @@ from ultralytics import YOLO
 import cv2
 import easyocr
 import os
-os.environ['YOLO_VERBOSE'] = 'False'  # 🔥 Desactiva logs de YOLO
-# Cargar modelo YOLO
-model = YOLO("./model.pt")
-reader = easyocr.Reader(["en"])
+import contextlib
+
+# 🔥 SILENCIO TOTAL - Redireccionar stdout/stderr a null
+with open(os.devnull, 'w') as f:
+    with contextlib.redirect_stdout(f), contextlib.redirect_stderr(f):
+        # 🔥 Desactivar TODOS los logs de YOLO y dependencias
+        os.environ['YOLO_VERBOSE'] = 'False'
+        os.environ['ULTRALYTICS_VERBOSE'] = 'False'
+        os.environ['EASYOCR_VERBOSE'] = 'False'
+        
+        # 🔥 Cargar modelo en SILENCIO ABSOLUTO
+        model = YOLO("./model.pt")
+        reader = easyocr.Reader(["en"])
 
 # Imagen de entrada
 image_path = sys.argv[1]
 
-# Ejecutar detección sin logs en stdout
-results = model(image_path, verbose=False)
+# 🔥 Ejecutar detección en SILENCIO ABSOLUTO
+with open(os.devnull, 'w') as f:
+    with contextlib.redirect_stdout(f), contextlib.redirect_stderr(f):
+        results = model(image_path, verbose=False)
 
-# Leer solo una vez la imagen
+# Leer imagen (esto no genera logs)
 img = cv2.imread(image_path)
 
 plate = None
@@ -31,14 +42,18 @@ for r in results:
         if crop.size == 0:
             continue
 
-        text = reader.readtext(crop, detail=0)
+        # 🔥 EasyOCR también en SILENCIO
+        with open(os.devnull, 'w') as f:
+            with contextlib.redirect_stdout(f), contextlib.redirect_stderr(f):
+                text = reader.readtext(crop, detail=0)
+        
         if text:
             plate = text[0]
             break
     if plate:
         break
 
-# 🔥 Imprimir SOLO JSON limpio
+# 🔥 Imprimir SOLO JSON limpio (esto es lo ÚNICO que se verá)
 print(json.dumps({"plate": plate if plate else "NO_PLATE"}), flush=True)
 
 sys.exit(0)

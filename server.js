@@ -11,6 +11,8 @@ app.use(cors({
   origin: [
     'https://frontend-patentes-h77nebs0w.vercel.app/',  // Cambiar por tu URL de Vercel
     'http://localhost:3000',
+    'https://frontend-patentes.vercel.app',
+    'https://frontend-patentes-*.vercel.app',
     'http://localhost:5173'
   ]
 }));

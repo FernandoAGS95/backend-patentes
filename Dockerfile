@@ -25,15 +25,24 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 
 WORKDIR /app
 
-# Python dependencies
+# Python dependencies (versiones compatibles comprobadas)
 RUN pip install --upgrade pip
-RUN pip install --no-cache-dir numpy==1.24.4
-RUN pip install --no-cache-dir torch==2.2.1 --index-url https://download.pytorch.org/whl/cpu
-RUN pip install --no-cache-dir torchvision==0.17.1 --index-url https://download.pytorch.org/whl/cpu   
-RUN pip install --no-cache-dir opencv-python-headless==4.9.0.80
-RUN pip install --no-cache-dir ultralytics==8.3.154
-RUN pip install --no-cache-dir Pillow==11.2.1       
-RUN pip install --no-cache-dir easyocr==1.7.2
+
+# Instalar NumPy PRIMERO con versión estable
+RUN pip install --no-cache-dir "numpy>=1.21.0,<1.25.0"
+
+# PyTorch con versión compatible con NumPy
+RUN pip install --no-cache-dir torch==2.0.1 torchvision==0.15.2 --index-url https://download.pytorch.org/whl/cpu
+
+# Instalar resto de dependencias con versiones compatibles
+RUN pip install --no-cache-dir opencv-python-headless==4.8.1.78
+RUN pip install --no-cache-dir "ultralytics>=8.0.0,<8.1.0"
+RUN pip install --no-cache-dir "Pillow>=9.0.0,<11.0.0"       
+RUN pip install --no-cache-dir "easyocr>=1.6.0,<1.8.0"
+
+# Verificar instalación
+RUN python -c "import numpy; import torch; print(f'NumPy: {numpy.__version__}'); print(f'PyTorch: {torch.__version__}')"
+
 RUN pip cache purge
 
 # Node.js dependencies

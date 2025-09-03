@@ -8,13 +8,25 @@ const app = express();
 
 // 🔥 CORS para permitir requests desde Vercel
 app.use(cors({
-  origin: [
-    'https://frontend-patentes-h77nebs0w.vercel.app/',  // Cambiar por tu URL de Vercel
-    'http://localhost:3000',
-    'https://frontend-patentes.vercel.app',
-    'https://frontend-patentes-*.vercel.app',
-    'http://localhost:5173'
-  ]
+  origin: function (origin, callback) {
+    // Permitir requests sin origin (como Postman)
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
+      'https://frontend-patentes.vercel.app',
+      'http://localhost:3000',
+      'http://localhost:5173'
+    ];
+    
+    // Permitir cualquier subdominio de vercel.app
+    if (origin.endsWith('.vercel.app') || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
 
 // Configuración de Multer

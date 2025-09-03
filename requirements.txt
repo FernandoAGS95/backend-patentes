@@ -1,7 +1,16 @@
+# YOLO y detección
 ultralytics==8.0.196
-opencv-python-headless==4.8.1.78  
+
+# OpenCV - versión headless para servidores
+opencv-python-headless==4.8.1.78
+
+# EasyOCR para reconocimiento de texto
 easyocr==1.7.0
-torch==2.0.1+cpu --extra-index-url https://download.pytorch.org/whl/cpu
-torchvision==0.15.2+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+
+# PyTorch CPU (sin el +cpu que causa problemas)
+torch==2.0.1
+torchvision==0.15.2
+
+# Dependencias básicas
 numpy==1.24.3
 Pillow==10.0.0

@@ -26,7 +26,7 @@ WORKDIR /app
 
 # Actualizar pip
 RUN pip install --no-cache-dir --upgrade pip
-
+RUN pip install --no-cache-dir numpy==1.24.4
 # Instalar dependencias Python una por una (más control)
 RUN pip install --no-cache-dir torch==2.0.1 --index-url https://download.pytorch.org/whl/cpu
 RUN pip install --no-cache-dir torchvision==0.15.2 --index-url https://download.pytorch.org/whl/cpu  

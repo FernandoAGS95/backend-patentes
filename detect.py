@@ -3,7 +3,8 @@ import json
 from ultralytics import YOLO
 import cv2
 import easyocr
-
+import os
+os.environ['YOLO_VERBOSE'] = 'False'  # 🔥 Desactiva logs de YOLO
 # Cargar modelo YOLO
 model = YOLO("./model.pt")
 reader = easyocr.Reader(["en"])
